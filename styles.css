@@ -245,25 +245,39 @@ nav .right a span {
     padding: 0 20px;
   }
 
+  .hero-section .text {
+    padding: 0 15px;
+  }
+
   .hero-section .text h2 {
-    font-size: 30px;
+    font-size: 28px;
+    margin-bottom: 15px;
   }
 
-  /* SECTION 2: Skills */
-  .skills-section {
-    padding: 0 20px;
+  .hero-section .text p {
+    line-height: 1.6;
   }
 
-  .skills-section .cells .cell span {
-    font-size: 16px;
-  }
-
-  /* SECTION 3: Testimony */
+  /* SECTION 2: Testimony */
   .testimony-section {
     padding: 0 20px;
   }
+  
+  .testimony-section .group {
+    flex-direction: column;
+  }
+  
+  .testimony-section .group .person-details {
+    margin-bottom: 20px;
+  }
+  
+  .testimony-section .group .text {
+    padding: 0 15px;
+    text-align: center;
+  }
+
   .hero-section2 {
-    flex-direction: center;
+    flex-direction: column;
     padding: 0 20px;
   }
 
@@ -278,7 +292,24 @@ nav .right a span {
   }
   
   .hero-section2 .text2 {
-    padding: 0 20px;
-    justify-content: center;
+    padding: 0 15px;
+  }
+
+  /* BOTTOM NAVBAR - Mobile Fix */
+  .bottom-Navbar {
+    padding: 10px 15px;
+    gap: 8px;
+  }
+  
+  .bottom-Navbar a {
+    font-size: 13px;
+    padding: 6px 10px;
+  }
+  
+  .bottom-Navbar .copyright {
+    font-size: 11px;
+    width: 100%;
+    text-align: center;
+    margin-top: 5px;
   }
 }
