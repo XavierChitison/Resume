@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+  <link rel="stylesheet" href="styles.css">
+    <title>Xavier's Skills</title>
+     <style>
+    :root {
+      --text-color: black;
+      --link-color: blue;
+      --background-color: #eeeff1;
+      --accent-color: #4a90d9;
+      --card-bg: white;
+      --shadow: 0 4px 6px rgba(0,0,0,0.1);
+    }
+    
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: 'Poppins', sans-serif;
+      color: var(--text-color);
+      background-color: var(--background-color);
+      max-width: 1400px;
+      margin: 0 auto;
+      padding-bottom: 100px;
+    }
+
+    /* Navbar */
+    nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 50px;
+      height: 80px;
+    }
+    
+    nav .left a {
+      color: var(--text-color);
+      font-size: 22px;
+      font-weight: 600;
+    }
+    
+    nav .right a {
+      color: var(--text-color);
+      margin: 0 10px;
+    }
+    
+    nav .right a:last-child {
+      color: var(--background-color);
+      background-color: var(--text-color);
+      padding: 5px 15px;
+      border-radius: 5px;
+    }
+
+    /* Skills Section */
+    .skills-section {
+      padding: 40px 50px;
+    }
+    
+    .skills-section h1 {
+      font-size: 35px;
+      text-align: center;
+      margin-bottom: 10px;
+    }
+    
+    .section-subtitle {
+      text-align: center;
+      color: #666;
+      margin-bottom: 40px;
+    }
+    
+    /* Skills Icons Grid */
+    .skills-grid {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 20px;
+      margin-bottom: 50px;
+    }
+    
+    .skill-icon-btn {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      width: 120px;
+      height: 120px;
+      background: var(--card-bg);
+      border: 2px solid #ddd;
+      border-radius: 15px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: var(--shadow);
+    }
+    
+    .skill-icon-btn:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+    }
+    
+    .skill-icon-btn.active {
+      border-color: var(--accent-color);
+      background: linear-gradient(135deg, #e8f4fc 0%, #d4e9f7 100%);
+    }
+    
+    .skill-icon-btn img {
+      width: 50px;
+      height: 50px;
+      object-fit: contain;
+      margin-bottom: 8px;
+    }
+    
+    .skill-icon-btn span {
+      font-size: 14px;
+      font-weight: 600;
+    }
+    
+    /* Certifications Display Area */
+    .certifications-container {
+      background: var(--card-bg);
+      border-radius: 20px;
+      padding: 40px;
+      box-shadow: var(--shadow);
+      min-height: 400px;
+    }
+    
+    .certifications-header {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      margin-bottom: 30px;
+      padding-bottom: 20px;
+      border-bottom: 2px solid #eee;
+    }
+    
+    .certifications-header img {
+      width: 40px;
+      height: 40px;
+    }
+    
+    .certifications-header h2 {
+      font-size: 28px;
+      color: var(--text-color);
+    }
+    
+    /* Certifications Grid */
+    .certs-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+      gap: 25px;
+    }
+    
+    .cert-card {
+      background: #f8f9fa;
+      border-radius: 12px;
+      overflow: hidden;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      cursor: pointer;
+    }
+    
+    .cert-card:hover {
+      transform: scale(1.02);
+      box-shadow: 0 8px 25px rgba(0,0,0,0.12);
+    }
+    
+    .cert-card img {
+      width: 100%;
+      height: 180px;
+      object-fit: cover;
+    }
+    
+    .cert-card .cert-info {
+      padding: 15px;
+    }
+    
+    .cert-card .cert-info h4 {
+      font-size: 16px;
+      margin-bottom: 5px;
+    }
+    
+    .cert-card .cert-info p {
+      font-size: 12px;
+      color: #666;
+    }
+    
+    /* Placeholder for empty state */
+    .empty-state {
+      text-align: center;
+      padding: 60px 20px;
+      color: #888;
+    }
+    
+    .empty-state i {
+      font-size: 60px;
+      margin-bottom: 20px;
+      color: #ddd;
+    }
+    
+  /* Bottom Navbar */
+    .bottom-Navbar {
+      display: flex;
+      justify-content: center;
+      padding: 20px;
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background-color: var(--background-color);
+      gap: 15px;
+      flex-wrap: wrap;
+    }
+    
+    .bottom-Navbar a {
+      color: black;
+      padding: 8px 15px;
+      border: 2px solid transparent;
+      border-radius: 5px;
+      transition: all 0.2s;
+      text-decoration: none;
+    }
+    
+    .bottom-Navbar a:hover {
+      color: white;
+      background-color: var(--text-color);
+    }
+    
+    .copyright {
+      align-self: center;
+      color: #666;
+    }
+    
+    /* Responsive */
+    @media (max-width: 768px) {
+      nav {
+        padding: 0 20px;
+      }
+      
+      .skills-section {
+        padding: 20px;
+      }
+      
+      .skill-icon-btn {
+        width: 100px;
+        height: 100px;
+      }
+      
+      .certifications-container {
+        padding: 20px;
+      }
+      
+      .certs-grid {
+        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Navbar -->
+  <nav>
+    <div class="left">
+      <a href="/">Skills <span class="wave">💻</span></a>
+    </div>
+      <!-- Github Icon -->
+    <div class="right">
+      <a href="https://github.com" target="_blank" rel="noopener noreferrer">
+        <i class="fa-brands fa-github"></i>
+        <span>github</span>
+      </a>
+      <!-- Linkedin Icon -->
+      <a href="https://www.linkedin.com/in/xavier-chitison-10435238a" target="_blank" rel="noopener noreferrer">
+        <i class="fa-brands fa-linkedin"></i>
+        <span>Linkedin</span>
+      </a>
+      <!-- Email Icon -->
+      <a href="mailto:chitisonx@gmail.com" target="_blank" rel="noopener noreferrer">
+        <i class="fa-solid fa-envelope"></i>
+        <span>Email</span>
+      </a>
+    </div>
+   </nav>
+   <!-- Skills Section -->
+  <section class="skills-section">
+    <h1>My Skills</h1>
+    <p class="section-subtitle">Click on a skill to view certifications</p>
+    
+    <!-- Skills Icons Grid -->
+    <div class="skills-grid">
+      <button class="skill-icon-btn" data-skill="python" onclick="showCertifications('python')">
+        <img src="Assets/icons8-python-96.png" alt="Python">
+        <span>Python</span>
+      </button>
+      
+      <button class="skill-icon-btn" data-skill="swift" onclick="showCertifications('swift')">
+        <img src="Assets/icons8-swift-96.png" alt="Swift">
+        <span>Swift</span>
+      </button>
+      
+      <button class="skill-icon-btn" data-skill="html" onclick="showCertifications('html')">
+        <img src="Assets/icons8-html-96.webp" alt="HTML">
+        <span>HTML</span>
+      </button>
+      
+      <button class="skill-icon-btn" data-skill="css" onclick="showCertifications('css')">
+        <img src="Assets/icons8-css-96.webp" alt="CSS">
+        <span>CSS</span>
+      </button>
+      
+      <button class="skill-icon-btn" data-skill="javascript" onclick="showCertifications('javascript')">
+         <img src="Assets/icons8-Javascript-96.png" alt="JavaScript">
+        <span>JavaScript</span>
+      </button>
+
+      <button class="skill-icon-btn" data-skill="other" onclick="showCertifications('other')">
+        <img src="Assets/icons8-worker-96.png" alt="other">
+        <span>Others</span>
+      </button>
+    </div>
+    
+    <!-- Certifications Display Area -->
+    <div class="certifications-container">
+      <div id="cert-display">
+        <!-- Default empty state -->
+        <div class="empty-state">
+          <i class="fa-solid fa-certificate"></i>
+          <h3>Select a skill above</h3>
+          <p>Click on any skill icon to view its certifications</p>
+        </div>
+      </div>
+    </div>
+  </section>
+  
+  <script>
+    // Skill to Certifications Mapping
+    const skillCertifications = {
+      python: [
+        { name: 'The legend of Python ', issuer: 'Codedex', image: 'Assets/Python1.pdf' },
+        { name: 'Programming Foundations with Python', issuer: 'CodeSignal', image: 'Assets/Python2.jpg' }
+      ],
+      swift: [
+        // { name: 'Swift Programming', issuer: 'Apple', image: '/' },
+        // { name: 'iOS App Development', issuer: 'Udemy', image: '/' }
+      ],
+      html: [
+        { name: 'Introduction To HTML', issuer: 'CodeSignal', image: 'Assets/Html1.jpg' },
+        { name: 'The Origins I: HTML', issuer: 'Codedex', image: 'Assets/Html2.jpeg' }
+      ],
+      css: [
+        // { name: 'CSS3 Mastery', issuer: 'Udemy', image: 'Assets/Cert7.jpeg' },
+        // { name: 'Responsive Web Design', issuer: 'FreeCodeCamp', image: 'Assets/Cert8.jpeg' }
+      ],
+      javascript: [
+        // { name: 'JavaScript Algorithms', issuer: 'FreeCodeCamp', image: 'Assets/Cert1.pdf' },
+        // { name: 'React Developer', issuer: 'Meta', image: 'Assets/Cert2.jpg' }
+      ],
+      other: [
+        {name:'Fundamentals of Machine Learning and Artificial Intelligence', issuer:'AWS', image: 'Assets/Ai.jpeg'},
+        {name:'Solutions Architecture Job Simulation', issuer:'AWS', image: 'Assets/Solutions.jpeg'},
+        {name:'Software Engineer Simulation', issuer:'Wells Fargo', image: 'Assets/Software.jpeg'},
+        {name:'Customer Service', issuer:'LinkedIn', image: 'Assets/Linkedin.jpeg'},
+      ]
+    };
+    
+    // Function to show certifications for selected skill
+    function showCertifications(skill) {
+      const certDisplay = document.getElementById('cert-display');
+      const certs = skillCertifications[skill];
+      
+      // Remove active class from all buttons
+      document.querySelectorAll('.skill-icon-btn').forEach(btn => {
+        btn.classList.remove('active');
+      });
+      
+      // Add active class to clicked button
+      document.querySelector(`[data-skill="${skill}"]`).classList.add('active');
+      
+      if (certs && certs.length > 0) {
+        // Build certifications HTML
+        let html = `
+          <div class="certifications-header">
+            <img src="Assets/icons8-${skill}-96.png" alt="${skill}">
+            <h2>${skill.charAt(0).toUpperCase() + skill.slice(1)} Certifications</h2>
+          </div>
+          <div class="certs-grid">
+        `;
+        
+        certs.forEach((cert, index) => {
+          html += `
+            <div class="cert-card" onclick="viewCert('${cert.image}')">
+              <img src="${cert.image}" alt="${cert.name}">
+              <div class="cert-info">
+                <h4>${cert.name}</h4>
+                <p>${cert.issuer}</p>
+              </div>
+            </div>
+          `;
+        });
+        
+        html += '</div>';
+        certDisplay.innerHTML = html;
+      } else {
+        certDisplay.innerHTML = `
+          <div class="empty-state">
+            <i class="fa-solid fa-certificate"></i>
+            <h3>No certifications yet</h3>
+            <p>Coming soon for ${skill}!</p>
+          </div>
+        `;
+      }
+    }
+    
+    // Function to view certificate (opens in new tab)
+    function viewCert(imagePath) {
+      window.open(imagePath, '_blank');
+    }
+  </script>
+   <main>
+    <!-- bottom Nav bar -->
+<nav>
+      <div class="bottom-Navbar">
+        <!-- Abpout me links -->
+        <a href="about.html">About Me</a>
+        <!-- Contacts links -->
+         <a href="Projects.html">Projects</a>
+         <!-- Skills link -->
+        <a href="home.html">Home</a>
+        <!-- Projects link -->
+         <a href="contact.html">Contacts</a>
+         <span class="copyright">© 2026 Xavier Chitison</span>
+      </div>
+     </nav>
+   </main>
+</body>
+</html>

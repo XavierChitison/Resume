@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+  <link rel="stylesheet" href="styles.css">
+    <title>Xavier's Projects</title>
+</head>
+<style>
+     :root {
+      --text-color: black;
+      --link-color: #2563eb;
+      --background-color: #eeeff1;
+      --card-bg: white;
+      --shadow: 0 4px 15px rgba(0,0,0,0.1);
+      --shadow-hover: 0 12px 40px rgba(0,0,0,0.15);
+      --accent-blue: #2563eb;
+      --accent-green: #10b981;
+      --accent-purple: #8b5cf6;
+      --accent-orange: #f59e0b;
+    }
+    
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: 'Poppins', sans-serif;
+      color: var(--text-color);
+      background-color: var(--background-color);
+      max-width: 1400px;
+      margin: 0 auto;
+      padding-bottom: 100px;
+    }
+
+    /* Navbar */
+    nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 50px;
+      height: 80px;
+    }
+    
+    nav .left a {
+      color: var(--text-color);
+      font-size: 22px;
+      font-weight: 600;
+    }
+    
+    nav .right a {
+      color: var(--text-color);
+      margin: 0 10px;
+      transition: all 0.3s ease;
+    }
+    
+    nav .right a:last-child {
+      color: var(--background-color);
+      background-color: var(--text-color);
+      padding: 5px 15px;
+      border-radius: 5px;
+    }
+    
+    nav .right a:hover {
+      transform: translateY(-2px);
+    }
+
+    /* Projects Section */
+    .projects-section {
+      padding: 40px 50px;
+    }
+    
+    .projects-section h1 {
+      font-size: 42px;
+      text-align: center;
+      margin-bottom: 10px;
+    }
+    
+    .projects-section .subtitle {
+      text-align: center;
+      color: #666;
+      margin-bottom: 50px;
+      font-size: 18px;
+    }
+    
+    /* Featured Project */
+    .featured-project {
+      background: var(--card-bg);
+      border-radius: 25px;
+      overflow: hidden;
+      box-shadow: var(--shadow);
+      margin-bottom: 50px;
+      display: flex;
+      flex-direction: row;
+      transition: all 0.3s ease;
+    }
+    
+    .featured-project:hover {
+      box-shadow: var(--shadow-hover);
+      transform: translateY(-5px);
+    }
+    
+    .featured-project .project-image {
+      flex: 1;
+      min-height: 400px;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 100px;
+    }
+    
+    .featured-project .project-content {
+      flex: 1.2;
+      padding: 50px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+    
+    .featured-badge {
+      display: inline-block;
+      background: linear-gradient(135deg, #f59e0b, #d97706);
+      color: white;
+      padding: 8px 20px;
+      border-radius: 50px;
+      font-size: 13px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 20px;
+      width: fit-content;
+    }
+    
+    .featured-project h2 {
+      font-size: 36px;
+      margin-bottom: 20px;
+    }
+    
+    .featured-project .description {
+      color: #555;
+      line-height: 1.9;
+      margin-bottom: 30px;
+      font-size: 17px;
+    }
+    
+    .tech-stack {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-bottom: 30px;
+    }
+    
+    .tech-tag {
+      background: #f3f4f6;
+      padding: 8px 18px;
+      border-radius: 10px;
+      font-size: 14px;
+      font-weight: 500;
+    }
+    
+    .project-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 15px 30px;
+      border-radius: 12px;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 16px;
+      transition: all 0.3s ease;
+    }
+    
+    .project-btn.primary {
+      background: var(--accent-blue);
+      color: white;
+    }
+    
+    .project-btn.primary:hover {
+      background: #1d4ed8;
+      transform: translateY(-3px);
+      box-shadow: 0 10px 30px rgba(37, 99, 235, 0.3);
+    }
+    
+    /* Coming Soon Section */
+    .coming-soon {
+      background: var(--card-bg);
+      border-radius: 25px;
+      padding: 60px 40px;
+      text-align: center;
+      box-shadow: var(--shadow);
+      margin-bottom: 50px;
+    }
+    
+    .coming-soon-icon {
+      width: 100px;
+      height: 100px;
+      background: linear-gradient(135deg, #10b981, #059669);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 25px;
+      font-size: 45px;
+      color: white;
+    }
+    
+    .coming-soon h3 {
+      font-size: 28px;
+      margin-bottom: 15px;
+    }
+    
+    .coming-soon p {
+      color: #666;
+      font-size: 18px;
+      max-width: 500px;
+      margin: 0 auto;
+      line-height: 1.7;
+    }
+    
+    /* Stats Section */
+    .stats-section {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 25px;
+      margin-top: 40px;
+    }
+    
+    .stat-card {
+      background: var(--card-bg);
+      border-radius: 18px;
+      padding: 35px;
+      text-align: center;
+      box-shadow: var(--shadow);
+      transition: all 0.3s ease;
+    }
+    
+    .stat-card:hover {
+      transform: translateY(-5px);
+      box-shadow: var(--shadow-hover);
+    }
+    
+    .stat-card .number {
+      font-size: 48px;
+      font-weight: 700;
+      color: var(--accent-blue);
+      margin-bottom: 8px;
+    }
+    
+    .stat-card .label {
+      color: #666;
+      font-size: 15px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+    
+    /* Bottom Navbar */
+    .bottom-Navbar {
+      display: flex;
+      justify-content: center;
+      padding: 20px;
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background-color: var(--background-color);
+      gap: 15px;
+      flex-wrap: wrap;
+    }
+    
+    .bottom-Navbar a {
+      color: black;
+      padding: 8px 15px;
+      border: 2px solid transparent;
+      border-radius: 5px;
+      transition: all 0.2s;
+      text-decoration: none;
+    }
+    
+    .bottom-Navbar a:hover {
+      color: white;
+      background-color: var(--text-color);
+    }
+    
+    .copyright {
+      align-self: center;
+      color: #666;
+    }
+
+    /* Responsive */
+    @media (max-width: 968px) {
+      .featured-project {
+        flex-direction: column;
+      }
+      
+      .featured-project .project-image {
+        min-height: 250px;
+      }
+      
+      .featured-project .project-content {
+        padding: 30px;
+      }
+      
+      .stats-section {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+    
+    @media (max-width: 768px) {
+      nav {
+        padding: 0 20px;
+      }
+      
+      .projects-section {
+        padding: 20px;
+      }
+      
+      .projects-section h1 {
+        font-size: 32px;
+      }
+      
+      .projects-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+<body>
+  <!-- Navbar -->
+  <nav>
+    <div class="left">
+      <a href="/">Projects <span class="wave">🚀</span></a>
+    </div>
+      <!-- Github Icon -->
+    <div class="right">
+      <a href="https://github.com" target="_blank" rel="noopener noreferrer">
+        <i class="fa-brands fa-github"></i>
+        <span>github</span>
+      </a>
+      <!-- Linkedin Icon -->
+      <a href="https://www.linkedin.com/in/xavier-chitison-10435238a" target="_blank" rel="noopener noreferrer">
+        <i class="fa-brands fa-linkedin"></i>
+        <span>Linkedin</span>
+      </a>
+      <!-- Email Icon -->
+      <a href="mailto:chitisonx@gmail.com" target="_blank" rel="noopener noreferrer">
+        <i class="fa-solid fa-envelope"></i>
+        <span>Email</span>
+      </a>
+    </div>
+   </nav>
+   <main>
+    <!-- Projects Section -->
+  <section class="projects-section">
+    <h1>My Projects</h1>
+    <p class="subtitle">A showcase of my work and learning journey</p>
+    
+    <!-- Single Featured Project -->
+    <article class="featured-project">
+      <div class="project-image">
+        <i class="fa-solid fa-trophy"></i>
+      </div>
+      <div class="project-content">
+        <span class="featured-badge">🏆 Award Winning</span>
+        <h2>Porfolio Website</h2>
+        <p class="description">
+          A comprehensive iOS mobile application designed to boost student participation, 
+          support, and school spirit through a loyalty rewards system. Built entirely 
+          solo during senior year Capstone project. The app won a national award and 
+          earned $1,000 for each team member. Featured on local news.
+        </p>
+        <div class="tech-stack">
+          <span class="tech-tag">Swift</span>
+          <span class="tech-tag">Xcode</span>
+          <span class="tech-tag">iOS</span>
+          <span class="tech-tag">UI/UX Design</span>
+        </div>
+        <a href="https://github.com" target="_blank" class="project-btn primary">
+          <i class="fa-brands fa-github"></i> View on GitHub
+        </a>
+      </div>
+    </article>
+    
+    <!-- Coming Soon -->
+    <div class="coming-soon">
+      <div class="coming-soon-icon">
+        <i class="fa-solid fa-code"></i>
+      </div>
+      <h3>More Projects Coming Soon!</h3>
+      <p>I'm currently working on new projects. Check back soon to see what I'm building next!</p>
+    </div>
+    
+    <!-- Stats Section -->
+    <div class="stats-section">
+      <div class="stat-card">
+        <div class="number">1</div>
+        <div class="label">Project</div>
+      </div>
+      <div class="stat-card">
+        <div class="number">8+</div>
+        <div class="label">Certifications</div>
+      </div>
+      <div class="stat-card">
+        <div class="number">5+</div>
+        <div class="label">Languages</div>
+      </div>
+    </div>
+  </section>
+  
+    <!-- Bottom nav Bar -->
+<nav>
+      <div class="bottom-Navbar">
+        <!-- Abpout me links -->
+        <a href="about.html">About Me</a>
+        <!-- Contacts links -->
+         <a href="skills.html">Skills</a>
+         <!-- Skills link -->
+        <a href="home.html">Home</a>
+        <!-- Projects link -->
+         <a href="contact.html">Contacts</a>
+         <span class="copyright">© 2026 Xavier Chitison</span>
+      </div>
+     </nav>
+   </main>
+</body>
+</html>

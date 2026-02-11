@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+  <link rel="stylesheet" href="styles.css">
+    <title>Xavier's Contacts</title>
+</head>
+<style>
+    :root {
+      --text-color: black;
+      --link-color: #2563eb;
+      --background-color: #eeeff1;
+      --card-bg: white;
+      --shadow: 0 4px 15px rgba(0,0,0,0.1);
+      --shadow-hover: 0 8px 30px rgba(0,0,0,0.15);
+      --accent-blue: #2563eb;
+      --accent-green: #10b981;
+      --accent-purple: #8b5cf6;
+    }
+    
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: 'Poppins', sans-serif;
+      color: var(--text-color);
+      background-color: var(--background-color);
+      max-width: 1400px;
+      margin: 0 auto;
+      padding-bottom: 100px;
+    }
+
+    /* Navbar */
+    nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 50px;
+      height: 80px;
+    }
+    
+    nav .left a {
+      color: var(--text-color);
+      font-size: 22px;
+      font-weight: 600;
+    }
+    
+    nav .right a {
+      color: var(--text-color);
+      margin: 0 10px;
+      transition: all 0.3s ease;
+    }
+    
+    nav .right a:last-child {
+      color: var(--background-color);
+      background-color: var(--text-color);
+      padding: 5px 15px;
+      border-radius: 5px;
+    }
+    
+    nav .right a:hover {
+      transform: translateY(-2px);
+    }
+
+    /* Contact Section */
+    .contact-section {
+      padding: 40px 50px;
+    }
+    
+    .contact-section h1 {
+      font-size: 42px;
+      text-align: center;
+      margin-bottom: 10px;
+    }
+    
+    .contact-section .subtitle {
+      text-align: center;
+      color: #666;
+      margin-bottom: 50px;
+      font-size: 18px;
+    }
+    
+    /* Contact Info Cards */
+    .contact-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 30px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    
+    .contact-card {
+      background: var(--card-bg);
+      border-radius: 20px;
+      padding: 35px 30px;
+      box-shadow: var(--shadow);
+      transition: all 0.3s ease;
+      text-align: center;
+      text-decoration: none;
+      color: inherit;
+    }
+    
+    .contact-card:hover {
+      transform: translateY(-8px);
+      box-shadow: var(--shadow-hover);
+    }
+    
+    .contact-card .icon {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 20px;
+      font-size: 32px;
+    }
+    
+    .contact-card.email .icon {
+      background: linear-gradient(135deg, #dbeafe, #bfdbfe);
+      color: var(--accent-blue);
+    }
+    
+    .contact-card.linkedin .icon {
+      background: linear-gradient(135deg, #e0e7ff, #c7d2fe);
+      color: #4f46e5;
+    }
+    
+    .contact-card.github .icon {
+      background: linear-gradient(135deg, #f3f4f6, #e5e7eb);
+      color: #1f2937;
+    }
+    
+    .contact-card.phone .icon {
+      background: linear-gradient(135deg, #d1fae5, #a7f3d0);
+      color: var(--accent-green);
+    }
+    
+    .contact-card .label {
+      font-size: 14px;
+      color: #888;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 8px;
+    }
+    
+    .contact-card .value {
+      font-size: 18px;
+      font-weight: 600;
+      color: var(--text-color);
+    }
+    
+    .contact-card .description {
+      font-size: 14px;
+      color: #666;
+      margin-top: 10px;
+    }
+
+    /* Contact Form Section */
+    .form-section {
+      max-width: 700px;
+      margin: 60px auto 0;
+      background: var(--card-bg);
+      border-radius: 25px;
+      padding: 45px;
+      box-shadow: var(--shadow);
+    }
+    
+    .form-section h2 {
+      font-size: 28px;
+      text-align: center;
+      margin-bottom: 30px;
+    }
+    
+    .form-group {
+      margin-bottom: 25px;
+    }
+    
+    .form-group label {
+      display: block;
+      font-size: 14px;
+      font-weight: 600;
+      margin-bottom: 8px;
+      color: #555;
+    }
+    
+    .form-group input,
+    .form-group textarea {
+      width: 100%;
+      padding: 15px 20px;
+      border: 2px solid #e5e7eb;
+      border-radius: 12px;
+      font-family: 'Poppins', sans-serif;
+      font-size: 16px;
+      transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    }
+    
+    .form-group input:focus,
+    .form-group textarea:focus {
+      outline: none;
+      border-color: var(--accent-blue);
+      box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.1);
+    }
+    
+    .form-group textarea {
+      min-height: 150px;
+      resize: vertical;
+    }
+    
+    .submit-btn {
+      width: 100%;
+      padding: 18px;
+      background: linear-gradient(135deg, #2563eb, #1d4ed8);
+      color: white;
+      border: none;
+      border-radius: 12px;
+      font-family: 'Poppins', sans-serif;
+      font-size: 18px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+    
+    .submit-btn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 10px 30px rgba(37, 99, 235, 0.3);
+    }
+    
+    /* Availability Badge */
+    .availability-section {
+      text-align: center;
+      margin-top: 50px;
+      padding: 30px;
+      background: var(--card-bg);
+      border-radius: 20px;
+      max-width: 500px;
+      margin-left: auto;
+      margin-right: auto;
+      box-shadow: var(--shadow);
+    }
+    
+    .availability-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: #d1fae5;
+      color: #065f46;
+      padding: 12px 25px;
+      border-radius: 50px;
+      font-weight: 600;
+    }
+    
+    .availability-badge .dot {
+      width: 12px;
+      height: 12px;
+      background: #10b981;
+      border-radius: 50%;
+      animation: pulse 2s infinite;
+    }
+    
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.7; transform: scale(1.1); }
+    }
+    
+    .availability-section p {
+      margin-top: 15px;
+      color: #666;
+    }
+
+   
+  /* Bottom Navbar */
+    .bottom-Navbar {
+      display: flex;
+      justify-content: center;
+      padding: 20px;
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background-color: var(--background-color);
+      gap: 15px;
+      flex-wrap: wrap;
+    }
+    
+    .bottom-Navbar a {
+      color: black;
+      padding: 8px 15px;
+      border: 2px solid transparent;
+      border-radius: 5px;
+      transition: all 0.2s;
+      text-decoration: none;
+    }
+    
+    .bottom-Navbar a:hover {
+      color: white;
+      background-color: var(--text-color);
+    }
+    
+    .copyright {
+      align-self: center;
+      color: #666;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      nav {
+        padding: 0 20px;
+      }
+      
+      .contact-section {
+        padding: 20px;
+      }
+      
+      .contact-section h1 {
+        font-size: 32px;
+      }
+      
+      .form-section {
+        padding: 25px;
+        margin: 40px 20px 0;
+      }
+    }
+  </style>
+<body>
+  <!-- Navbar -->
+  <nav>
+    <div class="left">
+      <a href="/">Contacts <span class="wave">📞</span></a>
+    </div>
+      <!-- Github Icon -->
+    <div class="right">
+      <a href="https://github.com" target="_blank" rel="noopener noreferrer">
+        <i class="fa-brands fa-github"></i>
+        <span>github</span>
+      </a>
+      <!-- Linkedin Icon -->
+      <a href="https://www.linkedin.com/in/xavier-chitison-10435238a" target="_blank" rel="noopener noreferrer">
+        <i class="fa-brands fa-linkedin"></i>
+        <span>Linkedin</span>
+      </a>
+      <!-- Email Icon -->
+      <a href="mailto:chitisonx@gmail.com" target="_blank" rel="noopener noreferrer">
+        <i class="fa-solid fa-envelope"></i>
+        <span>Email</span>
+      </a>
+    </div>
+   </nav>
+   <main>
+    <!-- Contact Section -->
+  <section class="contact-section">
+    <h1>Get In Touch</h1>
+    <p class="subtitle">I'd love to hear from you! Feel free to reach out through any of these channels.</p>
+    
+    <!-- Contact Info Cards -->
+    <div class="contact-grid">
+      <!-- Email -->
+      <a href="mailto:chitisonx@gmail.com" class="contact-card email">
+        <div class="icon">
+          <i class="fa-solid fa-envelope"></i>
+        </div>
+        <div class="label">Email</div>
+        <div class="value">chitisonx@gmail.com</div>
+        <div class="description">Best way to reach me</div>
+      </a>
+      
+      <!-- LinkedIn -->
+      <a href="https://www.linkedin.com/in/xavier-chitison-10435238a" target="_blank" class="contact-card linkedin">
+        <div class="icon">
+          <i class="fa-brands fa-linkedin"></i>
+        </div>
+        <div class="label">LinkedIn</div>
+        <div class="value">Connect with me</div>
+        <div class="description">Professional networking</div>
+      </a>
+      
+      <!-- GitHub -->
+      <a href="https://github.com" target="_blank" class="contact-card github">
+        <div class="icon">
+          <i class="fa-brands fa-github"></i>
+        </div>
+        <div class="label">GitHub</div>
+        <div class="value">Check my Repos</div>
+        <div class="description">View my projects</div>
+      </a>
+      
+      <!-- Phone -->
+      <a href="tel:+1-220-238-1487" class="contact-card phone">
+        <div class="icon">
+          <i class="fa-solid fa-phone"></i>
+        </div>
+        <div class="label">Phone</div>
+        <div class="value">(220) 238-1487</div>
+        <div class="description">Mon-Fri, 9am-5pm EST</div>
+      </a>
+    </div>
+    
+    <!-- Availability -->
+    <div class="availability-section">
+      <div class="availability-badge">
+        <span class="dot"></span>
+        Open to Opportunities
+      </div>
+      <p>Currently accepting internship and apprenticeship inquiries for 2026-2030</p>
+    </div>
+    
+    <!-- Contact Form -->
+    <div class="form-section">
+      <h2>Send a Message</h2>
+      <form action="mailto:chitisonx@gmail.com" method="post" enctype="text/plain">
+        <div class="form-group">
+          <label for="name">Your Name</label>
+          <input type="text" id="name" name="name" placeholder="John Doe" required>
+        </div>
+        
+        <div class="form-group">
+          <label for="email">Email Address</label>
+          <input type="email" id="email" name="email" placeholder="john@example.com" required>
+        </div>
+        
+        <div class="form-group">
+          <label for="subject">Subject</label>
+          <input type="text" id="subject" name="subject" placeholder="Internship Opportunity" required>
+        </div>
+        
+        <div class="form-group">
+          <label for="message">Message</label>
+          <textarea id="message" name="message" placeholder="Hi Xavier, I'd like to discuss..." required></textarea>
+        </div>
+        
+        <button type="submit" class="submit-btn">
+          <i class="fa-solid fa-paper-plane"></i> Send Message
+        </button>
+      </form>
+    </div>
+  </section>
+    <!-- bottom Nav bar -->
+      <nav>
+      <div class="bottom-Navbar">
+        <!-- Abpout me links -->
+        <a href="about.html">About Me</a>
+        <!-- Contacts links -->
+         <a href="skills.html">Skills</a>
+         <!-- Skills link -->
+        <a href="home.html">Home</a>
+        <!-- Projects link -->
+         <a href="Projects.html">Projects</a>
+         <span class="copyright">© 2026 Xavier Chitison</span>
+      </div>
+     </nav>
+   </main>
+</body>
+</html>
