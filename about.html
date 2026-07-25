@@ -14,7 +14,7 @@
     <title>About | Xavier Chitison</title>
 </head>
 
-<body>
+<body class="page-about">
     <header class="site-header">
         <nav class="site-nav" aria-label="Main navigation"><a class="brand"
                 href="home.html">Xavier<span>.</span></a><button class="nav-toggle" type="button" aria-expanded="false"
@@ -46,8 +46,24 @@
                     problems. Once I learned that this is exactly what engineers do, I knew I wanted to become one.</p>
                 <p>Outside of school, I enjoy learning through technology, creating new things, and finding practical
                     solutions to real challenges.</p>
-            </article><img src="Assets/Headershot.PNG" alt="Professional portrait of Xavier Chitison"
-                style="border-radius:18px;box-shadow:var(--shadow);height:430px;object-fit:cover;object-position:center top;width:100%">
+            </article>
+            <section class="carousel about-carousel" aria-roledescription="carousel"
+                aria-label="Portfolio photos of Xavier" tabindex="0">
+                <div class="carousel-viewport">
+                    <figure class="carousel-slide active" aria-hidden="false"><img src="Assets/Headershot2.PNG"
+                            alt="Xavier Chitison portfolio photo" loading="lazy">
+                        <figcaption>Curiosity, creativity, and a commitment to growth.</figcaption>
+                    </figure>
+                </div>
+                <div class="carousel-controls"><button class="icon-button" type="button" data-carousel="previous"
+                        aria-label="Show previous photo"><i class="fa-solid fa-arrow-left"
+                            aria-hidden="true"></i></button>
+                    <div class="dot-wrap" role="tablist" aria-label="Choose a photo"><button class="dot active"
+                            type="button" role="tab" aria-selected="true" aria-label="Show photo 1"></button></div>
+                    <button class="icon-button" type="button" data-carousel="next" aria-label="Show next photo"><i
+                            class="fa-solid fa-arrow-right" aria-hidden="true"></i></button>
+                </div>
+            </section>
         </section>
         <section class="section" aria-labelledby="journey-title">
             <div class="section-heading">

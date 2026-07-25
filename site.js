@@ -1,4 +1,38 @@
 (() => {
+  const brand = document.querySelector('.brand');
+  if (brand) {
+    const name = 'Xavier';
+    const word = document.createElement('span');
+    word.className = 'brand-word';
+    word.setAttribute('aria-hidden', 'true');
+    [...name].forEach((letter, index) => {
+      const character = document.createElement('span');
+      character.className = 'brand-letter';
+      character.style.setProperty('--letter-delay', `${index * 75}ms`);
+      character.textContent = letter;
+      word.append(character);
+    });
+    const accent = document.createElement('span');
+    accent.className = 'brand-accent';
+    accent.setAttribute('aria-hidden', 'true');
+    accent.textContent = '.';
+    const idea = document.createElement('span');
+    idea.className = 'brand-idea';
+    idea.setAttribute('aria-hidden', 'true');
+    idea.innerHTML = `
+      <svg class="brand-bulb" viewBox="0 0 32 32" focusable="false">
+        <g class="bulb-rays">
+          <path d="M16 2v3M6.1 6.1l2.2 2.2M25.9 6.1l-2.2 2.2M2 16h3M27 16h3"/>
+        </g>
+        <path class="bulb-glass" d="M23.5 15.1c0 2.8-1.5 4.7-3.4 6.3-.7.6-1.1 1.4-1.1 2.3h-6c0-.9-.4-1.7-1.1-2.3-1.9-1.6-3.4-3.5-3.4-6.3a7.5 7.5 0 0 1 15 0Z"/>
+        <path class="bulb-filament" d="m13 16 3 3 3-3M16 19v4"/>
+        <path class="bulb-base" d="M13 24h6M13.8 27h4.4"/>
+      </svg>`;
+    brand.replaceChildren(word, accent, idea);
+    brand.setAttribute('aria-label', 'Xavier — Home');
+    brand.classList.add('brand-ready');
+  }
+
   const toggle = document.querySelector('.nav-toggle');
   const menu = document.querySelector('.nav-links');
   if (toggle && menu) {
@@ -14,6 +48,7 @@
   if (carousel) {
     const slides = [...carousel.querySelectorAll('.carousel-slide')];
     const dots = [...carousel.querySelectorAll('.dot')];
+    const controls = carousel.querySelector('.carousel-controls');
     let index = 0;
     let interval;
     let startX = 0;
@@ -24,14 +59,117 @@
       dots.forEach((dot, i) => { dot.classList.toggle('active', i === index); dot.setAttribute('aria-selected', String(i === index)); });
     };
     const stop = () => clearInterval(interval);
-    const start = () => { stop(); if (!reducedMotion) interval = setInterval(() => show(index + 1), 4500); };
+    const start = () => { stop(); if (slides.length > 1 && !reducedMotion) interval = setInterval(() => show(index + 1), 4500); };
+    if (controls) controls.hidden = slides.length < 2;
     carousel.querySelectorAll('[data-carousel]').forEach((button) => button.addEventListener('click', () => { show(index + (button.dataset.carousel === 'next' ? 1 : -1)); start(); }));
     dots.forEach((dot, i) => dot.addEventListener('click', () => { show(i); start(); }));
     carousel.addEventListener('mouseenter', stop); carousel.addEventListener('mouseleave', start);
     carousel.addEventListener('focusin', stop); carousel.addEventListener('focusout', start);
+    carousel.addEventListener('keydown', (event) => {
+      if (slides.length > 1 && (event.key === 'ArrowLeft' || event.key === 'ArrowRight')) {
+        event.preventDefault();
+        show(index + (event.key === 'ArrowRight' ? 1 : -1));
+        start();
+      }
+    });
     carousel.addEventListener('touchstart', (event) => { startX = event.changedTouches[0].screenX; }, { passive: true });
     carousel.addEventListener('touchend', (event) => { const delta = event.changedTouches[0].screenX - startX; if (Math.abs(delta) > 45) show(index + (delta < 0 ? 1 : -1)); }, { passive: true });
     start();
+  }
+
+  const testimonialCarousel = document.querySelector('.testimonial-carousel');
+  if (testimonialCarousel) {
+    // Add future testimonials here; controls and autoplay enable automatically.
+    const testimonials = [
+      {
+        name: 'Patrick Danko',
+        role: 'Whitehall Yearling High School Engineering Teacher',
+        organization: 'Whitehall Yearling High School',
+        quote: 'Xavier is a motivated and hardworking software engineering student who consistently demonstrates curiosity, dedication, and a strong willingness to learn. He takes initiative, asks the right questions, and strives to improve with every project he works on. Xavier brings a positive attitude, solid technical skills, and a growth mindset to every challenge. Any team would benefit from his determination, adaptability, and drive to succeed.',
+        image: 'Assets/Testimony.PNG',
+        imageAlt: 'Patrick Danko, Whitehall Yearling High School Engineering Teacher',
+        logo: null
+      }
+    ];
+    const track = testimonialCarousel.querySelector('.testimonial-track');
+    const controls = testimonialCarousel.querySelector('.testimonial-controls');
+    const dots = testimonialCarousel.querySelector('.testimonial-dots');
+    const directionButtons = [...testimonialCarousel.querySelectorAll('[data-testimonial-direction]')];
+    const reducedMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
+    let index = 0;
+    let timer;
+    let startX = 0;
+
+    const render = () => {
+      const testimonial = testimonials[index];
+      track.innerHTML = `
+        <article class="testimonial-card" aria-label="Testimonial ${index + 1} of ${testimonials.length}">
+          <i class="fa-solid fa-quote-left testimonial-quote-icon" aria-hidden="true"></i>
+          <blockquote><p>“${testimonial.quote}”</p></blockquote>
+          <footer class="testimonial-person">
+            <img src="${testimonial.image}" alt="${testimonial.imageAlt}" loading="lazy">
+            <div>
+              <cite>${testimonial.name}</cite>
+              <p>${testimonial.role}</p>
+            </div>
+          </footer>
+        </article>`;
+      dots.innerHTML = testimonials.map((item, dotIndex) =>
+        `<button class="dot${dotIndex === index ? ' active' : ''}" type="button" role="tab" aria-selected="${dotIndex === index}" aria-label="Show testimonial ${dotIndex + 1} from ${item.name}" data-testimonial-index="${dotIndex}"></button>`
+      ).join('');
+      dots.querySelectorAll('[data-testimonial-index]').forEach((dot) => {
+        dot.addEventListener('click', () => {
+          show(Number(dot.dataset.testimonialIndex));
+          restart();
+        });
+      });
+    };
+    const show = (next) => {
+      index = (next + testimonials.length) % testimonials.length;
+      track.classList.add('is-changing');
+      window.setTimeout(() => {
+        render();
+        track.classList.remove('is-changing');
+      }, reducedMotion ? 0 : 180);
+    };
+    const stop = () => clearInterval(timer);
+    const restart = () => {
+      stop();
+      if (testimonials.length > 1 && !reducedMotion) {
+        timer = setInterval(() => show(index + 1), 7000);
+      }
+    };
+
+    controls.hidden = testimonials.length < 2;
+    directionButtons.forEach((button) => {
+      button.addEventListener('click', () => {
+        show(index + (button.dataset.testimonialDirection === 'next' ? 1 : -1));
+        restart();
+      });
+    });
+    testimonialCarousel.addEventListener('mouseenter', stop);
+    testimonialCarousel.addEventListener('mouseleave', restart);
+    testimonialCarousel.addEventListener('focusin', stop);
+    testimonialCarousel.addEventListener('focusout', restart);
+    testimonialCarousel.addEventListener('keydown', (event) => {
+      if (testimonials.length > 1 && (event.key === 'ArrowLeft' || event.key === 'ArrowRight')) {
+        event.preventDefault();
+        show(index + (event.key === 'ArrowRight' ? 1 : -1));
+        restart();
+      }
+    });
+    testimonialCarousel.addEventListener('touchstart', (event) => {
+      startX = event.changedTouches[0].screenX;
+    }, { passive: true });
+    testimonialCarousel.addEventListener('touchend', (event) => {
+      const delta = event.changedTouches[0].screenX - startX;
+      if (testimonials.length > 1 && Math.abs(delta) > 45) {
+        show(index + (delta < 0 ? 1 : -1));
+        restart();
+      }
+    }, { passive: true });
+    render();
+    restart();
   }
 
   const certCarousel = document.querySelector('.cert-carousel');
@@ -44,11 +182,17 @@
 
     // Add future credentials here; filtering and carousel controls update automatically.
     const certifications = [
-      { title: 'HTML Certification', organization: 'Independent coursework', category: 'Web Development', issueDate: '2026', credentialUrl: 'Assets/icons8-html-96.png', image: 'Assets/icons8-html-96.png', description: 'Semantic HTML, document structure, forms, and accessible page foundations.' },
-      { title: 'CSS Certification', organization: 'Independent coursework', category: 'Web Development', issueDate: '2026', credentialUrl: 'Assets/icons8-css-96.png', image: 'Assets/icons8-css-96.png', description: 'Modern CSS styling, layouts, responsive design, and visual presentation.' },
-      { title: 'JavaScript Certification', organization: 'Codedex', category: 'Web Development', issueDate: 'February 26, 2026', credentialUrl: 'Assets/IMG_5228.jpeg', image: 'Assets/IMG_5228.jpeg', description: 'JavaScript fundamentals, loops, arrays, functions, objects, HTML, and CSS.' },
-      { title: 'Responsive Web Design Certification', organization: 'freeCodeCamp', category: 'Web Development', issueDate: 'February 17, 2026 · ~300 hours', credentialUrl: 'https://freecodecamp.org/certification/xavierchitison/responsive-web-design', image: 'Assets/Csscert copy.png', description: 'Responsive design, HTML, CSS, and accessible web development.' },
-      { title: 'Programming Foundations with Python', organization: 'CodeSignal', category: 'Programming', issueDate: 'November 19, 2025', credentialUrl: 'Assets/Python1.pdf', image: 'Assets/Python2.jpg', description: 'General programming, algorithms, and Python foundations.' }
+      { title: 'The Origins I: HTML', category: 'Web Development', image: 'Assets/Htmlcert.jpeg', issuer: 'Codédex', date: 'February 1, 2026', credentialUrl: 'Assets/Htmlcert.jpeg', description: 'Essential HTML elements, attributes, forms, and semantic markup.', altText: 'Codédex The Origins I HTML certificate awarded to Xavier Chitison' },
+      { title: 'The Origins II: CSS', category: 'Web Development', image: 'Assets/CSSCert.jpg', issuer: 'Codédex', date: 'February 13, 2026', credentialUrl: 'Assets/CSSCert.jpg', description: 'CSS selectors, properties, the box model, and layout fundamentals.', altText: 'Codédex The Origins II CSS certificate awarded to Xavier Chitison' },
+      { title: 'The Origins III: JavaScript', category: 'Web Development', image: 'Assets/JavaScriptCert.jpeg', issuer: 'Codédex', date: 'February 26, 2026', credentialUrl: 'Assets/JavaScriptCert.jpeg', description: 'JavaScript variables, conditionals, loops, arrays, functions, objects, and HTML/CSS integration.', altText: 'Codédex The Origins III JavaScript certificate awarded to Xavier Chitison' },
+      { title: 'Introduction to HTML', category: 'Web Development', image: 'Assets/Htmlcert2.jpg', issuer: 'CodeSignal', date: 'November 19, 2025', credentialUrl: 'Assets/Htmlcert2.jpg', description: 'HTML, CSS, and web browser fundamentals from a front-end engineering learning path.', altText: 'CodeSignal Introduction to HTML certificate awarded to Xavier Chitison' },
+      { title: 'Legacy Responsive Web Design V8', category: 'Web Development', image: 'Assets/ResponsiveCert.png', issuer: 'freeCodeCamp', date: 'February 17, 2026 · approximately 300 hours', credentialUrl: 'https://freecodecamp.org/certification/xavierchitison/responsive-web-design', description: 'Responsive web design and accessible front-end development.', altText: 'freeCodeCamp Legacy Responsive Web Design V8 certification awarded to Xavier Chitison' },
+      { title: 'The Legend of Python', category: 'Programming', image: 'Assets/Pythoncert1.pdf', issuer: 'Codédex', date: 'January 25, 2026', credentialUrl: 'Assets/Pythoncert1.pdf', description: 'Python fundamentals including variables, control flow, loops, lists, functions, classes, objects, and modules.', altText: 'Codédex The Legend of Python certificate awarded to Xavier Chitison' },
+      { title: 'Programming Foundations with Python', category: 'Programming', image: 'Assets/Pythoncert2.jpg', issuer: 'CodeSignal', date: 'November 19, 2025', credentialUrl: 'Assets/Pythoncert2.jpg', description: 'General programming concepts and algorithms using Python.', altText: 'CodeSignal Programming Foundations with Python certificate awarded to Xavier Chitison' },
+      { title: 'Fundamentals of Machine Learning and Artificial Intelligence', category: 'Cloud & AI', image: 'Assets/Ai.jpeg', issuer: 'AWS Training & Certification', date: 'November 19, 2025', credentialUrl: 'Assets/Ai.jpeg', description: 'Foundational concepts in machine learning and artificial intelligence.', altText: 'AWS Fundamentals of Machine Learning and Artificial Intelligence completion certificate awarded to Xavier Chitison' },
+      { title: 'Solutions Architecture Job Simulation', category: 'Cloud & AI', image: 'Assets/Solutionscert.jpeg', issuer: 'AWS and Forage', date: 'November 23, 2025', credentialUrl: 'Assets/Solutionscert.jpeg', description: 'Designing a simple, scalable hosting architecture.', altText: 'AWS and Forage Solutions Architecture Job Simulation certificate awarded to Xavier Chitison' },
+      { title: 'Software Engineering Job Simulation', category: 'Software Engineering', image: 'Assets/Softwarecert.jpeg', issuer: 'Forage', date: 'November 23, 2025', credentialUrl: 'Assets/Softwarecert.jpeg', description: 'Practical software engineering tasks involving data-model creation and implementation.', altText: 'Forage Software Engineering Job Simulation certificate awarded to Xavier Chitison' },
+      { title: 'Customer Service Foundations', category: 'Professional Skills', image: 'Assets/Linkedincert.jpeg', issuer: 'LinkedIn Learning', date: 'November 22, 2025', credentialUrl: 'Assets/Linkedincert.jpeg', description: 'Customer support and customer service foundations.', altText: 'LinkedIn Learning Customer Service Foundations certificate completed by Xavier Chitison' }
     ];
     let index = 0;
     let timer;
@@ -57,7 +201,10 @@
     let renderVersion = 0;
     const createSlide = (certification) => {
       const external = certification.credentialUrl.startsWith('http');
-      return `<div class="cert-slide"><article class="card cert-card"><img src="${certification.image}" alt="${certification.title} badge" loading="lazy"><div class="cert-body"><p class="eyebrow">${certification.organization}</p><h3>${certification.title}</h3><p class="meta">Earned ${certification.issueDate}</p><p>${certification.description}</p><a class="button secondary" href="${certification.credentialUrl}" target="_blank"${external ? ' rel="noopener noreferrer"' : ''}>View credential</a></div></article></div>`;
+      const media = certification.image.endsWith('.pdf')
+        ? `<object data="${certification.image}#page=1&view=FitH" type="application/pdf" aria-label="${certification.altText}"><a href="${certification.image}">View ${certification.title}</a></object>`
+        : `<img src="${certification.image}" alt="${certification.altText}" loading="lazy">`;
+      return `<div class="cert-slide"><article class="card cert-card">${media}<div class="cert-body"><p class="eyebrow">${certification.issuer}</p><h3>${certification.title}</h3><p class="meta">Earned ${certification.date}</p><p>${certification.description}</p><a class="button secondary" href="${certification.credentialUrl}" target="_blank"${external ? ' rel="noopener noreferrer"' : ''}>View credential</a></div></article></div>`;
     };
     const render = (category) => {
       visibleCertifications = category === 'All' ? certifications : certifications.filter((certification) => certification.category === category);
