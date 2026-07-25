@@ -44,16 +44,40 @@
     });
   }
 
+  const aboutCarousel = document.querySelector('[data-about-carousel]');
+  if (aboutCarousel) {
+    const aboutSlides = [
+      { src: 'Assets/Headershot1-web.jpg', alt: 'Xavier Chitison professional portrait', caption: 'Focused on building, learning, and growing.', position: 'position-center' },
+      { src: 'Assets/Headershot3-web.jpg', alt: 'Xavier Chitison portfolio headshot', caption: 'A professional approach to every opportunity.', position: 'position-left' },
+      { src: 'Assets/Headershot4-web.jpg', alt: 'Xavier Chitison professional photo at graduation', caption: 'Curiosity and creativity in action.', position: 'position-left' },
+      { src: 'Assets/Headershot5.jpg', alt: 'Xavier Chitison receiving recognition at graduation', caption: 'Ready to collaborate and solve meaningful problems.', position: 'position-right' },
+      { src: 'Assets/Headershot6-web.jpg', alt: 'Xavier Chitison with technology mentors', caption: 'Continuing to learn through every challenge.', position: 'position-far-right' },
+      { src: 'Assets/Headershot7-web.jpg', alt: 'Xavier Chitison professional classroom portrait', caption: 'Building toward a career in software development.', position: 'position-lower' }
+    ];
+    const viewport = aboutCarousel.querySelector('.carousel-viewport');
+    const dotWrap = aboutCarousel.querySelector('.dot-wrap');
+    viewport.innerHTML = aboutSlides.map((slide, index) => `
+      <figure class="carousel-slide${index === 0 ? ' active' : ''}" aria-hidden="${index !== 0}">
+        <img class="slide-image ${slide.position}" src="${slide.src}" alt="${slide.alt}"${index === 0 ? ' fetchpriority="high"' : ' loading="lazy"'}>
+        <figcaption>${slide.caption}</figcaption>
+      </figure>`).join('');
+    dotWrap.innerHTML = aboutSlides.map((slide, index) =>
+      `<button class="dot${index === 0 ? ' active' : ''}" type="button" role="tab" aria-selected="${index === 0}" aria-label="Show photo ${index + 1}: ${slide.alt}"></button>`
+    ).join('');
+  }
+
   const carousel = document.querySelector('.carousel');
   if (carousel) {
-    const slides = [...carousel.querySelectorAll('.carousel-slide')];
-    const dots = [...carousel.querySelectorAll('.dot')];
+    let slides = [...carousel.querySelectorAll('.carousel-slide')];
+    let dots = [...carousel.querySelectorAll('.dot')];
     const controls = carousel.querySelector('.carousel-controls');
+    const dotWrap = carousel.querySelector('.dot-wrap');
     let index = 0;
     let interval;
     let startX = 0;
     const reducedMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
     const show = (next) => {
+      if (!slides.length) return;
       index = (next + slides.length) % slides.length;
       slides.forEach((slide, i) => { slide.classList.toggle('active', i === index); slide.setAttribute('aria-hidden', String(i !== index)); });
       dots.forEach((dot, i) => { dot.classList.toggle('active', i === index); dot.setAttribute('aria-selected', String(i === index)); });
@@ -62,7 +86,34 @@
     const start = () => { stop(); if (slides.length > 1 && !reducedMotion) interval = setInterval(() => show(index + 1), 4500); };
     if (controls) controls.hidden = slides.length < 2;
     carousel.querySelectorAll('[data-carousel]').forEach((button) => button.addEventListener('click', () => { show(index + (button.dataset.carousel === 'next' ? 1 : -1)); start(); }));
-    dots.forEach((dot, i) => dot.addEventListener('click', () => { show(i); start(); }));
+    if (dotWrap) dotWrap.addEventListener('click', (event) => {
+      const dot = event.target.closest('.dot');
+      if (!dot || !dotWrap.contains(dot)) return;
+      show(dots.indexOf(dot));
+      start();
+    });
+    slides.forEach((slide) => {
+      const image = slide.querySelector('img');
+      let errorHandled = false;
+      const handleError = () => {
+        if (errorHandled) return;
+        errorHandled = true;
+        const failedPath = image.getAttribute('src');
+        console.error(`Failed to load slideshow image: ${failedPath}`);
+        const failedIndex = slides.indexOf(slide);
+        slide.remove();
+        dots[failedIndex]?.remove();
+        if (failedIndex < index) index -= 1;
+        slides = [...carousel.querySelectorAll('.carousel-slide')];
+        dots = [...carousel.querySelectorAll('.dot')];
+        index = Math.min(index, Math.max(0, slides.length - 1));
+        if (controls) controls.hidden = slides.length < 2;
+        show(index);
+        start();
+      };
+      image.addEventListener('error', handleError, { once: true });
+      if (image.complete && image.naturalWidth === 0) queueMicrotask(handleError);
+    });
     carousel.addEventListener('mouseenter', stop); carousel.addEventListener('mouseleave', start);
     carousel.addEventListener('focusin', stop); carousel.addEventListener('focusout', start);
     carousel.addEventListener('keydown', (event) => {

@@ -438,15 +438,33 @@ p {
     outline-offset: 5px;
 }
 
-.portrait-carousel {
+.about-carousel,
+.home-headshot {
     justify-self: center;
     max-width: 460px;
     width: 100%;
 }
 
-.portrait-carousel .carousel-viewport {
-    aspect-ratio: auto;
+.about-carousel .carousel-viewport {
+    aspect-ratio: 4/5;
+    height: auto;
+}
+
+.home-headshot {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 24px;
+    box-shadow: var(--shadow);
     height: 430px;
+    overflow: hidden;
+}
+
+.home-headshot img {
+    display: block;
+    height: 100%;
+    object-fit: cover;
+    object-position: center top;
+    width: 100%;
 }
 
 .carousel-viewport {
@@ -472,8 +490,24 @@ p {
 .carousel-slide img {
     height: 100%;
     object-fit: cover;
-    object-position: center top;
+    object-position: center;
     width: 100%;
+}
+
+.carousel-slide img.position-left {
+    object-position: 35% center;
+}
+
+.carousel-slide img.position-right {
+    object-position: 65% center;
+}
+
+.carousel-slide img.position-far-right {
+    object-position: 78% center;
+}
+
+.carousel-slide img.position-lower {
+    object-position: center 58%;
 }
 
 .carousel-slide figcaption {
@@ -1552,7 +1586,12 @@ p {
         aspect-ratio: 1/1;
     }
 
-    .portrait-carousel .carousel-viewport {
+    .about-carousel .carousel-viewport {
+        aspect-ratio: 4/5;
+        height: auto;
+    }
+
+    .home-headshot {
         aspect-ratio: 1/1;
         height: auto;
     }
