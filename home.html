@@ -14,7 +14,7 @@
     <title>Xavier Chitison | Software Developer</title>
 </head>
 
-<body>
+<body class="page-home">
     <header class="site-header">
         <nav class="site-nav" aria-label="Main navigation"><a class="brand"
                 href="home.html">Xavier<span>.</span></a><button class="nav-toggle" type="button" aria-expanded="false"
@@ -45,10 +45,11 @@
                         href="resume.html">View resume</a><a class="button secondary" href="contact.html">Contact me</a>
                 </div>
             </div>
-            <section class="carousel" aria-roledescription="carousel" aria-label="Professional photos of Xavier">
+            <section class="carousel" aria-roledescription="carousel" aria-label="Professional photos of Xavier"
+                tabindex="0">
                 <div class="carousel-viewport">
-                    <figure class="carousel-slide active" aria-hidden="false"><img src="Assets/Headershot.PNG"
-                            alt="Xavier Chitison in a suit and tie" fetchpriority="high">
+                    <figure class="carousel-slide active" aria-hidden="false"><img src="Assets/Headershot1.PNG"
+                            alt="Xavier Chitison professional headshot" fetchpriority="high">
                         <figcaption>Focused on creating meaningful software.</figcaption>
                     </figure>
                     <figure class="carousel-slide" aria-hidden="true"><img src="Assets/headshot-casual.jpg"
@@ -112,6 +113,26 @@
                 <div class="button-row"><a class="button secondary" href="contact.html" style="color:white;">Let’s connect <i
                             class="fa-solid fa-arrow-right" aria-hidden="true"></i></a></div>
             </article>
+        </section>
+        <section class="section testimonial-section" aria-labelledby="testimonials-title">
+            <div class="section-heading testimonial-heading">
+                <p class="eyebrow">What people say</p>
+                <h2 id="testimonials-title">Testimonials</h2>
+                <p>Comments from people I have learned from, worked with, and completed projects alongside.</p>
+            </div>
+            <div class="testimonial-carousel" role="region" aria-roledescription="carousel"
+                aria-label="Testimonials about Xavier" tabindex="0">
+                <div class="testimonial-track" aria-live="polite"></div>
+                <div class="testimonial-controls" hidden>
+                    <button class="icon-button" type="button" data-testimonial-direction="previous"
+                        aria-label="Show previous testimonial"><i class="fa-solid fa-arrow-left"
+                            aria-hidden="true"></i></button>
+                    <div class="testimonial-dots" role="tablist" aria-label="Choose a testimonial"></div>
+                    <button class="icon-button" type="button" data-testimonial-direction="next"
+                        aria-label="Show next testimonial"><i class="fa-solid fa-arrow-right"
+                            aria-hidden="true"></i></button>
+                </div>
+            </div>
         </section>
         <section class="cta" aria-labelledby="cta-title">
             <p class="eyebrow">Let’s build something</p>
