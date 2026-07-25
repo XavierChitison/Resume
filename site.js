@@ -48,6 +48,7 @@
   if (aboutCarousel) {
     const aboutSlides = [
       { src: 'Assets/Headershot1-web.jpg', alt: 'Xavier Chitison professional portrait', caption: 'Focused on building, learning, and growing.', position: 'position-center' },
+      { src: 'Assets/Headershot2.jpg', alt: 'Xavier Chitison professional headshot in a black suit', caption: 'Bringing focus and professionalism to every opportunity.', position: 'position-center' },
       { src: 'Assets/Headershot3-web.jpg', alt: 'Xavier Chitison portfolio headshot', caption: 'A professional approach to every opportunity.', position: 'position-left' },
       { src: 'Assets/Headershot4-web.jpg', alt: 'Xavier Chitison professional photo at graduation', caption: 'Curiosity and creativity in action.', position: 'position-left' },
       { src: 'Assets/Headershot5.jpg', alt: 'Xavier Chitison receiving recognition at graduation', caption: 'Ready to collaborate and solve meaningful problems.', position: 'position-right' },
