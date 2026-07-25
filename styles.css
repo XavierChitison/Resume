@@ -600,6 +600,16 @@ p {
     grid-template-columns: 1fr 1fr;
 }
 
+.about-content {
+    align-items: start;
+}
+
+.about-text {
+    align-self: start;
+    height: auto;
+    min-height: 0;
+}
+
 .dark-card {
     background: linear-gradient(140deg, #172d56, #2455af);
     border: 0;
